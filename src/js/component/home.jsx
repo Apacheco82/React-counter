@@ -10,7 +10,7 @@ Le podemos añadir un or || para que cuando aún no tenga valor, por defecto sea
 	return (
 		<div className="container container-fluid d-flex text-center">
 		<div className="counter">
-		<div className="reloj"><i class="fa-regular fa-clock"></i></div>
+		<div className="reloj"><i className="fa-regular fa-clock"></i></div>
 		<div className="six">{props.six || 0}</div>
 		<div className="five">{props.five || 0}</div>
 		<div className="four">{props.four || 0}</div>
@@ -19,6 +19,8 @@ Le podemos añadir un or || para que cuando aún no tenga valor, por defecto sea
 		<div className="one">{props.one || 0}</div>
  		 </div>
   </div>
+
+  
 	)
 };
 
