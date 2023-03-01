@@ -4,7 +4,9 @@ import React from "react";
 
 
 //create your first component
-const Home = (props) => {
+const Home = (props) => { /*en home vamos a crear una funcion que recoge props,
+va a ser un prop para cada div, para poder pintar cada elemento que creemos en index.jsx
+Le podemos añadir un or || para que cuando aún no tenga valor, por defecto sea 0 hasta que pinte algo*/
 	return (
 		<div className="container container-fluid d-flex text-center">
 		<div className="counter">
@@ -20,4 +22,4 @@ const Home = (props) => {
 	)
 };
 
-export default Home;
+export default Home; //se exporta home
