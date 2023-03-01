@@ -15,13 +15,13 @@ let alerta2 = false;
 let alerta3 = false;
 let alerta4 = false;
 let play = true; //bool que controla si está en play o pause, por defecto en true porque la web carga iniciando la cuenta
-let intervalo2 = null; //intervalo para manejar el play y pause
+let intervalo = null; //intervalo para manejar el play y pause
 
-
-
-let intervaloInicial = setInterval(() => {
+function theFinalCount() {
+  //se ha almacenado todo el INTERVAL dentro de una función, que se llamará tanto al cargar la web como al pulsar PLAY
+  intervalo = setInterval(() => {
     //funcion para que se renderice al cargar la web por primera vez dependiendo del intervalo que escojamos
-  
+
     let countString = count.toString(); // se pasa a string para poder pintarlo en html
     let ud = countString[countString.length - 1]; //ultima posicion
     let dc = countString[countString.length - 2]; //penultima posicion
@@ -29,9 +29,9 @@ let intervaloInicial = setInterval(() => {
     let ml = countString[countString.length - 4];
     let dm = countString[countString.length - 5];
     let cm = countString[countString.length - 6];
-  
+
     count++; //se amenta el contador
-  
+
     if ((dc === "1") & (alerta1 == false)) {
       //cuando pasen 10 segundos, si alerta es false (que lo es)
       //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show", el color de la alerta en la clase de bootstrap y el texto que se va a mostrar
@@ -40,7 +40,7 @@ let intervaloInicial = setInterval(() => {
           show={"container container-fluid d-flex text-center"}
           color={"alert alert-danger"}
           texto={
-            "Hola Cristian! Voy a desaparecer cuando llegue a 20 segundos, si no le das antes al reset..."
+            "Hola Cristian! Voy a desaparecer cuando llegue a 20 segundos..."
           }
         />,
         document.querySelector("#appAlert")
@@ -80,104 +80,54 @@ let intervaloInicial = setInterval(() => {
       );
       alerta4 = true; //reinicializa la variable alerta para que no vuelva a ser false y no vuelva a pasar por aquí
     }
-  
+
     //hay que renderizar aquí para que pinte cada segundo, si se pone fuera no lo va a hacer
     ReactDOM.render(
       <Home one={ud} two={dc} three={cn} four={ml} five={dm} six={cm} />,
       document.querySelector("#app")
     );
   }, 1000);
+}
+
+theFinalCount();
 
 const Buttons = () => {
-
   let player = () => {
-    if (play == false) { //consulta la variable play de arriba
-      intervalo2 = setInterval(() => {
-        //funcion para que se renderice al cargar la web por primera vez dependiendo del intervalo que escojamos
-      
-        let countString = count.toString(); // se pasa a string para poder pintarlo en html
-        let ud = countString[countString.length - 1]; //ultima posicion
-        let dc = countString[countString.length - 2]; //penultima posicion
-        let cn = countString[countString.length - 3]; //etc
-        let ml = countString[countString.length - 4];
-        let dm = countString[countString.length - 5];
-        let cm = countString[countString.length - 6];
-      
-        count++; //se amenta el contador
-      
-        if ((dc === "1") & (alerta1 == false)) {
-          //cuando pasen 10 segundos, si alerta es false (que lo es)
-          //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show", el color de la alerta en la clase de bootstrap y el texto que se va a mostrar
-          ReactDOM.render(
-            <Alert
-              show={"container container-fluid d-flex text-center"}
-              color={"alert alert-danger"}
-              texto={
-                "Hola Cristian! Voy a desaparecer cuando llegue a 20 segundos..."
-              }
-            />,
-            document.querySelector("#appAlert")
-          );
-          alerta1 = true;
-        } //reinicializa la variable alerta para que no vuelva a ser false y no vuelva a pasar por aquí
-        if ((dc === "2") & (alerta2 == false)) {
-          //cuando pasen 20 segundos, si alerta es false (que lo es)
-          //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show" para que aplicando CSS desaparezca
-          ReactDOM.render(
-            <Alert show={"desaparecehijoeputa"} />,
-            document.querySelector("#appAlert")
-          );
-          alerta2 = true; //reinicializa la variable alerta para que no vuelva a ser false y no vuelva a pasar por aquí
-        }
-        if ((ud === "1") & (dc === "2") & (alerta3 == false)) {
-          //cuando pasen 21 segundos, si alerta es false (que lo es)
-          //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show", el color de la alerta en la clase de bootstrap y el texto que se va a mostrar
-          ReactDOM.render(
-            <Alert
-              show={"container container-fluid d-flex text-center"}
-              color={"alert alert-success"}
-              texto={
-                "Lo ves? No te mentí. Bueno, desapareceré para siempre cuando llegue a 30 segundos."
-              }
-            />,
-            document.querySelector("#appAlert")
-          );
-          alerta3 = true;
-        } //reinicializa la variable alerta para que no vuelva a ser false y no vuelva a pasar por aquí
-        if ((dc === "3") & (alerta4 == false)) {
-          //cuando pasen 20 segundos, si alerta es false (que lo es)
-          //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show" para que aplicando CSS desaparezca
-          ReactDOM.render(
-            <Alert show={"desaparecehijoeputa"} />,
-            document.querySelector("#appAlert")
-          );
-          alerta4 = true; //reinicializa la variable alerta para que no vuelva a ser false y no vuelva a pasar por aquí
-        }
-      
-        //hay que renderizar aquí para que pinte cada segundo, si se pone fuera no lo va a hacer
-        ReactDOM.render(
-          <Home one={ud} two={dc} three={cn} four={ml} five={dm} six={cm} />,
-          document.querySelector("#app")
-        );
-      }, 1000);
-      play = true;
+    if (play == false) {
+      //comprobamos que la variable play no esté true, porque si lo está no podemos darle a PLAY otra vez
+      theFinalCount(); //se llama de nuevo a la función que controla el setInterval para continuar con el contador
+      play = true; //se cambia la variable play a true, para que si volvemos a pinchar en el botón PLAY no vuelva a entrar
     }
   };
 
   let pause = () => {
-    if (intervaloInicial != null) {
-      clearInterval(intervaloInicial);
-      intervaloInicial = null;
-      play = false;
-    } else if (intervalo2 != null) {
-      clearInterval(intervalo2);
-      intervalo2 = null;
-      play = false;
+    if (intervalo != null) {
+      //si el intervalo (variable global declarada en línea 18) está relleno
+      clearInterval(intervalo); //limpiamos el interval, hacemos un clear y se detiene el contador
+      intervalo = null; //vaciamos la variable intervalo para que vuelva a estar a null, así si volvemos a pulsar PAUSE no haremos nada
+      play = false; //se pone la variable play a false para indicar que estamos pausados y que podemos pulsar PLAY
     }
   };
+
   let reset = () => {
-    count = 0
-  }
+    count = 0; //se resetea el contador a 0
+
+    if (play == false) { //si estamos en PAUSE, necesitamos que el setInterval arranque de nuevo
+      theFinalCount();
+      play = true; //se pone la variable play a true para que no duplique velocidad
+    }
+
+    ReactDOM.render( //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show" para que aplicando CSS desaparezca
+      <Alert show={"desaparecehijoeputa"} />,
+      document.querySelector("#appAlert")
+    );
+
+    alerta1 = false; //se resetea a false los valores de las 4 alertas para limpiar correctamente el Alert y que vuelva a pasar por los IF
+    alerta2 = false;
+    alerta3 = false;
+    alerta4 = false;
+
+  };
 
   return (
     <div className="container container-fluid text-center" id="botones">
@@ -222,8 +172,8 @@ setInterval(() => {
       document.querySelector("#appAlert2")
     );
     countToZero = 59; //reinicializo la variable para que empiece desde 59 y no pase a numeros negativos
-  } else if (countToZero == 56) {
-    //cuando pasen 3 segundos, elimino la alerta
+  } else if (countToZero == 55) {
+    //cuando pasen 5 segundos, elimino la alerta
     //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show" para que aplicando CSS desaparezca
     ReactDOM.render(
       <Alert show={"desaparecehijoeputa"} />,
