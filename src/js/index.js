@@ -80,8 +80,9 @@ setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que 
 ReactDOM.render(<Home one={udz} two={dcz} three={cnz} four={mlz} five={dmz} six={cmz}/>, document.querySelector("#appb"));
 },1000);
 
+
 let countButton = 0 //contador iniciado en 0 
-setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que escojamos
+const buttonInterval = setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que escojamos
 
     let countString = countButton.toString(); // se pasa a string para poder pintarlo en html
     let udb = countString[countString.length-1]; //ultima posicion
@@ -91,16 +92,13 @@ setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que 
     let dmb = countString[countString.length-5];
     let cmb = countString[countString.length-6];
     
-    countButton++; //se amenta el contador
-
-
+    countButton++; //se aumenta el contador
   //hay que renderizar aquí para que pinte cada segundo, si se pone fuera no lo va a hacer
 ReactDOM.render(<Home one={udb} two={dcb} three={cnb} four={mlb} five={dmb} six={cmb}/>, document.querySelector("#appc"))
 //ReactDOM.render(<Buttons />, document.querySelector("#buttons"))
-
 },1000);
 
-ReactDOM.render(<Buttons />, document.querySelector("#buttons"))
+ReactDOM.render(<Buttons/>,document.querySelector("#buttons"))
 //esta sería la manera normal de hacerlo, fuera de la función
 //ReactDOM.render(<Home/>, document.querySelector("#app"));
 
