@@ -8,6 +8,7 @@ import "../styles/index.css";
 //import your own components
 import Home from "./component/home.jsx";
 import Alert from "./component/alert.jsx" //importo el componente para poderlo usar en index, como si fuera home pero sin pasar por home
+import Buttons from "./component/buttons.jsx";
 
 
 let count = 0 //contador iniciado en 0 
@@ -55,7 +56,7 @@ setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que 
 ReactDOM.render(<Home one={ud} two={dc} three={cn} four={ml} five={dm} six={cm}/>, document.querySelector("#app"));
 },1000);
 
-let countToZero = 60 ; //contador, esta vez desde 60
+let countToZero = 59 ; //contador, esta vez desde 60
 setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que escojamos
     let countString = countToZero.toString(); // se pasa a string para poder pintarlo en html
     let udz = countString[countString.length-1]; //ultima posicion
@@ -71,7 +72,7 @@ setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que 
         //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show", el color de la alerta en la clase de bootstrap y el texto que se va a mostrar
         ReactDOM.render(<Alert show= {"container container-fluid d-flex text-center"} color={"alert alert-success"} texto={"Se acabó el tiempo. Volveré a establecer la cuenta atrás en un minuto"} />, document.querySelector("#appAlert2"))
         countToZero = 59 //reinicializo la variable para que empiece desde 59 y no pase a numeros negativos
-    } else if(countToZero == 57){ //cuando pasen 2 segundos, elimino la alerta
+    } else if(countToZero == 56){ //cuando pasen 3 segundos, elimino la alerta
         //renderiza la alerta con sus props cambiadas, cambio la clase del contenedor con "show" para que aplicando CSS desaparezca
         ReactDOM.render(<Alert show={"desaparecehijoeputa"}/>, document.querySelector("#appAlert2"))
     }
@@ -79,7 +80,27 @@ setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que 
 ReactDOM.render(<Home one={udz} two={dcz} three={cnz} four={mlz} five={dmz} six={cmz}/>, document.querySelector("#appb"));
 },1000);
 
+let countButton = 0 //contador iniciado en 0 
+setInterval(()=>{ //funcion para que se renderice dependiendo del intervalo que escojamos
 
+    let countString = countButton.toString(); // se pasa a string para poder pintarlo en html
+    let udb = countString[countString.length-1]; //ultima posicion
+    let dcb = countString[countString.length-2]; //penultima posicion
+    let cnb = countString[countString.length-3]; //etc
+    let mlb = countString[countString.length-4];
+    let dmb = countString[countString.length-5];
+    let cmb = countString[countString.length-6];
+    
+    countButton++; //se amenta el contador
+
+
+  //hay que renderizar aquí para que pinte cada segundo, si se pone fuera no lo va a hacer
+ReactDOM.render(<Home one={udb} two={dcb} three={cnb} four={mlb} five={dmb} six={cmb}/>, document.querySelector("#appc"))
+//ReactDOM.render(<Buttons />, document.querySelector("#buttons"))
+
+},1000);
+
+ReactDOM.render(<Buttons />, document.querySelector("#buttons"))
 //esta sería la manera normal de hacerlo, fuera de la función
 //ReactDOM.render(<Home/>, document.querySelector("#app"));
 
